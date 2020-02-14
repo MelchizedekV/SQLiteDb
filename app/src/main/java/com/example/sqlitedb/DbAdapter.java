@@ -40,6 +40,16 @@ public class DbAdapter
 
         return cursor;
     }
+    public int  updateData(String name ){
+
+
+         SQLiteDatabase sqLiteDatabase =sQliteHelper.getWritableDatabase();
+         ContentValues contentValues =new ContentValues();
+         contentValues.put(sQliteHelper.USER_NAME,name);
+         String[] whereArgs = {"melchi"};
+         int id = sqLiteDatabase.update(sQliteHelper.TABLE_NAME,contentValues,sQliteHelper.USER_NAME+" = ?",whereArgs);
+         return id;
+    }
 
 
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +18,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     List<NameListPojo> nameList;
     Activity activity;
-
+    static int clickedPosition =-1;
 
     public RecyclerViewAdapter(Activity activity, List<NameListPojo> nameList) {
 
@@ -38,8 +40,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.name.setText(nameList.get(position).name);
+//        holder.name.setText(nameList.get(position).name);
         holder.Phno.setText(nameList.get(position).Phno);
+
+        holder.chckBox.setText(nameList.get(position).name);
+
+
+        if (clickedPosition == position)
+            holder.chckBox.setChecked(true);
+        else
+            holder.chckBox.setChecked(false);
 
     }
 
@@ -53,13 +63,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name,Phno;
-
+        CheckBox chckBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name =itemView.findViewById(R.id.nameTxt);
+
             Phno =itemView.findViewById(R.id.phneTxt);
+            chckBox=itemView.findViewById(R.id.chckBox);
+
+            chckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                    clickedPosition = getAdapterPosition();
+
+
+                }
+            });
         }
     }
 }
